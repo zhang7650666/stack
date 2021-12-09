@@ -1,10 +1,11 @@
-import { createApp } from "vue";
+import { createApp, h } from "vue";
 import Antd from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 import store from "@/store";
 import router from "@/router";
 import App from "./App.vue";
 const app = createApp(App);
-
+const node = h("div", { class: "test" }, "hello world");
+console.log("node", node);
 app.use(store).use(router).use(Antd);
 app.mount("#app");

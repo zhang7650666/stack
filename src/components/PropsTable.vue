@@ -1,13 +1,14 @@
 <template>
   <div class="props-table">
+    <!-- <div>{{ finalProps }}</div> -->
     <div v-for="(value, key) in finalProps" :key="key" class="prop-item">
       <span class="label" v-if="value.text">{{ value?.text }}</span>
       <div class="prop-component">
         <component
           v-if="value"
           :is="value.component"
+          v-bind="value.extraProps"
           :[value.valueProps]="value.value"
-          v-bind="value.extra"
           v-on="value.events"
         >
           <template v-if="value.options">
@@ -61,16 +62,19 @@ export default defineComponent({
               eventName = "change",
               valueProps = "value",
               initalTransform,
+              afterTransform,
             } = item;
             const newItem = {
               ...item,
-              value: initalTransform ? initalTransform(value) : "value",
+              value: initalTransform ? initalTransform(value) : value,
               eventName,
               valueProps,
               events: {
                 [eventName]: (e: any) => {
-                  context.emit("change", { key, value: e });
-                  console.log("事件触发了");
+                  context.emit("change", {
+                    key,
+                    value: afterTransform ? afterTransform(e) : e,
+                  });
                 },
               },
             };

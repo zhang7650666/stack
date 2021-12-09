@@ -6,6 +6,7 @@ interface PropsToForm {
   text?: string;
   options?: { text: string; value: any }[];
   initalTransform?: (v: any) => any;
+  afterTransform?: (v: any) => any;
   valueProps?: string;
   eventName?: string;
 }
@@ -21,11 +22,13 @@ const mapPropsToForms: PropsToForms = {
       row: 3,
     },
     text: "文本",
+    afterTransform: (e: any) => e.target.value,
   },
   fontSize: {
     component: "a-input-number",
     text: "字号",
     initalTransform: (v: string) => parseFloat(v),
+    afterTransform: (e: number) => (e ? `${e}px` : ""),
   },
   lineHeight: {
     component: "a-slider",
@@ -36,6 +39,7 @@ const mapPropsToForms: PropsToForms = {
     },
     text: "行高",
     initalTransform: (v: string) => parseFloat(v),
+    afterTransform: (e: number) => e.toString(),
   },
   textAlign: {
     component: "a-radio-group",
@@ -55,6 +59,7 @@ const mapPropsToForms: PropsToForms = {
         value: "right",
       },
     ],
+    afterTransform: (e: any) => e.target.value,
   },
   fontFamily: {
     component: "a-select",

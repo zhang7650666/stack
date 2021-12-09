@@ -88,7 +88,7 @@ export default defineComponent({
 
     // 监听子组件的变化
     const handlerChange = (e: any) => {
-      console.log("event", e);
+      $store.commit("updateComponent", e);
     };
     return {
       components,

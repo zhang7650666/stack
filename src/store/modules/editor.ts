@@ -88,7 +88,14 @@ const editor: Module<EditorProps, GlobalDataProps> = {
     // 选中当前项
     setActive(state, id: string) {
       state.currentElement = id;
-      console.log("currentElement", state.currentElement);
+    },
+    // 更新组件
+    updateComponent(state, { key, value }) {
+      state.components.find((component) => {
+        if (component.id === state.currentElement) {
+          component.props[key] = value;
+        }
+      });
     },
   },
   getters: {

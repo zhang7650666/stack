@@ -15,7 +15,6 @@ const defaultProps = transformToComponentProps(textDefaultProps);
 import { defineProps, computed } from "vue";
 import { pick } from "lodash-es";
 
-console.log("defaultProps", defaultProps);
 const props = defineProps({
   tag: {
     type: String,

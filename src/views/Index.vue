@@ -194,7 +194,6 @@ import { useRoute } from "vue-router";
 
 // const store = useStore();
 const route = useRoute();
-console.log("route", route);
 const isHomePage = computed(() => route.name === "Index");
 // const userInfo = computed(() => store.state.user);
 // const loading = computed(() => store.state.status.loading);
