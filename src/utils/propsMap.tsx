@@ -1,10 +1,11 @@
+import { VNode, h } from "vue";
 import { TextComponentProps } from "@/utils/defaultProps";
 interface PropsToForm {
   component: string;
   subComponent?: string;
   extraProps?: { [key: string]: any };
   text?: string;
-  options?: { text: string; value: any }[];
+  options?: { text: string | VNode; value: any }[];
   initalTransform?: (v: any) => any;
   afterTransform?: (v: any) => any;
   valueProps?: string;
@@ -15,6 +16,29 @@ type PropsToForms = {
   [p in keyof TextComponentProps]?: PropsToForm;
 };
 
+const fontFamilyArr = [
+  //   { value: "", text: "无" },
+  { text: "宋体", value: '"SimSun","STSong"' },
+  { text: "黑体", value: '"SimHei","STHeiti"' },
+  { text: "楷体", value: '"KaiTi","STKaiti"' },
+  { text: "仿宋", value: '"FangSong","STFangsong"' },
+  { text: "Arial", value: '"Arial", sans-serif' },
+  { text: "Arial Black", value: '"Arial Black", sans-serif' },
+  { text: "Comic Sans MS", value: '"Comic Sans MS"' },
+  { text: "Courier New", value: '"Courier New", monospace' },
+  { text: "Georgia", value: '"Georgia", serif' },
+  { text: "Times New Roman", value: '"Times New Roman", serif' },
+];
+
+const fontFamilyMap = fontFamilyArr.map((item) => {
+  return {
+    value: item.value,
+    // text: h("span", { style: { fontFamily: item.value } }, item.text),
+    text: (
+      <span style={{ fontFamily: item.value }}>{item.text}</span>
+    ) as VNode,
+  };
+});
 const mapPropsToForms: PropsToForms = {
   text: {
     component: "a-textarea",
@@ -65,19 +89,7 @@ const mapPropsToForms: PropsToForms = {
     component: "a-select",
     subComponent: "a-select-option",
     text: "字体",
-    options: [
-      //   { value: "", text: "无" },
-      { text: "宋体", value: '"SimSun","STSong"' },
-      { text: "黑体", value: '"SimHei","STHeiti"' },
-      { text: "楷体", value: '"KaiTi","STKaiti"' },
-      { text: "仿宋", value: '"FangSong","STFangsong"' },
-      { text: "Arial", value: '"Arial", sans-serif' },
-      { text: "Arial Black", value: '"Arial Black", sans-serif' },
-      { text: "Comic Sans MS", value: '"Comic Sans MS"' },
-      { text: "Courier New", value: '"Courier New", monospace' },
-      { text: "Georgia", value: '"Georgia", serif' },
-      { text: "Times New Roman", value: '"Times New Roman", serif' },
-    ],
+    options: [{ value: "", text: "无" }, ...fontFamilyMap],
   },
 };
 export { PropsToForm, PropsToForms, mapPropsToForms };
